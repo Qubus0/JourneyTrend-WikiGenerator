@@ -23,9 +23,12 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: '3.x' # Version using SemVer's version range syntax
+      - run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install --upgrade Pillow
 
       # Runs a single command using the runners shell
       - name: generate wiki
         run: |
           cd generate_terraria_mod_wiki
-          python generate_terraria_mod_wiki.py
+          python3 generate_terraria_mod_wiki.py
