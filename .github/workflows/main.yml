@@ -28,11 +28,12 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - run: |
-        cd generate_terraria_mod_wiki
-        ls
-        cd player
-        ls
+      - name: list
+        run: |
+          cd generate_terraria_mod_wiki
+          ls
+          cd player
+          ls
 
       # Runs a single command using the runners shell
       - name: Generate wiki
