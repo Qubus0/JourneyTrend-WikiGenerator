@@ -20,7 +20,7 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - run: git clone https://${{ secrets.JT_REPO }}:x-oauth-basic@github.com/Qubus0/JourneyTrend.git
+      - uses: git clone https://${{ secrets.JT_REPO }}:x-oauth-basic@github.com/Qubus0/JourneyTrend.git
       - uses: actions/setup-python@v2
         with:
           python-version: '3.x' # Version using SemVer's version range syntax
