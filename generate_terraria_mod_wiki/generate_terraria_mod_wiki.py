@@ -30,7 +30,7 @@ class Wiki:
         self.source_dir: str = source_dir
         self.vanity_source_dir: str = os.path.join(source_dir, "Items", "Vanity")
         self.repo: Repo = None
-        self.package_name = "generate_terraria_mod_wiki"
+        # self.package_name = "generate_terraria_mod_wiki"
         self.wiki_url_base: str = "/Qubus0/JourneyTrend/wiki/"
         self.repo_url_base: str = "/Qubus0/JourneyTrend/tree/master/"
         self.repo_url_file_base: str = "/Qubus0/JourneyTrend/blob/master/"

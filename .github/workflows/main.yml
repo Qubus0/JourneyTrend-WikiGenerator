@@ -24,6 +24,6 @@ jobs:
       - uses: actions/checkout@v2
 
       # Runs a single command using the runners shell
-      - run: cd tools
+      - run: cd generate_terraria_mod_wiki
       - run: python generate_terraria_mod_wiki.py
       - run : cd ..
