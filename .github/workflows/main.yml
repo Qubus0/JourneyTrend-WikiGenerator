@@ -33,4 +33,5 @@ jobs:
       - name: Generate wiki
         run: |
           cd generate_terraria_mod_wiki
+          ls
           python3 generate_terraria_mod_wiki.py ../JourneyTrend
