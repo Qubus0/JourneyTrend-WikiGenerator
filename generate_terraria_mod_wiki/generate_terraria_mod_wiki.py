@@ -450,7 +450,7 @@ class Wiki:
             next_link = self.build_wiki_link(next_text, next_vanity_set)
             page.add_table_header(previous_link, next_link)
             self.pages.append(page)
-            # break  # a break here leads to the generation of a single set page for testing 
+            # break  # a break here generates a single set page for testing
 
     def build_vanity_set_page(self, vanity_set_name):
         # vanity_set_name = "Granite"  #                testing a specific set
