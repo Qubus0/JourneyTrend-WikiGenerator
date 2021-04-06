@@ -30,10 +30,8 @@ jobs:
           pip install -r requirements.txt
       - name: list
         run: |
-          cd generate_terraria_mod_wiki
-          ls
-          cd player
-          ls
+          cd generate_terraria_mod_wiki/player
+          xdg-open Body.png
 
       # Runs a single command using the runners shell
       - name: Generate wiki
