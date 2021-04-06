@@ -575,6 +575,7 @@ class Page:
 
 def main():
     if len(sys.argv) > 1:
+        os.chdir("../")
         wiki = Wiki(sys.argv[1])
         wiki.build_wiki()
     else:
