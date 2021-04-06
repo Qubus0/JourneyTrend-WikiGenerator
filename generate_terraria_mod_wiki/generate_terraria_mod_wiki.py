@@ -322,7 +322,7 @@ class Wiki:
         for part in parts:
             if self.has_texture(set_name, part):
                 img = os.path.join(self.package_name, "player", part.capitalize() + ".png")
-                temp = Image.open(img)
+                temp = Image.open(open(img, "rb"))
                 final_image.paste(temp, (0, 0), temp.convert('RGBA'))
 
         wiki_dir = os.path.join("wiki", "images")
