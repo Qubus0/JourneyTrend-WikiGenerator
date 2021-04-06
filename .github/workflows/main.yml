@@ -37,4 +37,5 @@ jobs:
           pip install -r requirements.txt
       - name: Generate wiki
         run: |
-          python3 generate_terraria_mod_wiki/generate_terraria_mod_wiki.py JourneyTrend
+          cd generate_terraria_mod_wiki
+          python3 generate_terraria_mod_wiki.py ../JourneyTrend
