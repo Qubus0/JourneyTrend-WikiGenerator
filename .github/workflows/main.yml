@@ -20,7 +20,7 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - run: git clone https://${{ secrets.JT_REPO }}:x-oauth-basic@github.com/Qubus0/JourneyTrend.git
+      - run: git clone https://${{ secrets.JT_REPO }}:x-oauth-basic@github.com/Qubus0/JourneyTrend.wiki.git
       - uses: actions/setup-python@v2
         with:
           python-version: '3.x' # Version using SemVer's version range syntax
@@ -28,12 +28,6 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: list
-        run: |
-          cd generate_terraria_mod_wiki/player
-          xdg-open Body.png
-
-      # Runs a single command using the runners shell
       - name: Generate wiki
         run: |
           cd generate_terraria_mod_wiki

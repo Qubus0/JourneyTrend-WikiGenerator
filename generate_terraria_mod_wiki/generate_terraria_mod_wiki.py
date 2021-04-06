@@ -316,30 +316,31 @@ class Wiki:
             return False
 
     def build_full_set_image(self, set_name: str) -> None:
-        final_image = Image.new("RGBA", (40, 56), (0, 0, 0, 0))
-        parts = ["head", "body", "legs", "hands", "hair", "altHair"]
-        for part in parts:
-            if self.has_texture(set_name, part):
-                temp = Image.open(os.path.join(self.package_name, "player", part.capitalize() + ".png"))
-                final_image.paste(temp, (0, 0), temp.convert('RGBA'))
-
-        wiki_dir = os.path.join("wiki", "images")
-        pathlib.Path(wiki_dir).mkdir(parents=True, exist_ok=True)
-        base_path = self.get_set_item_base_path_from_name(set_name)
-        parts = ["legs", "body", "head"]
-        for part in parts:
-            image_ending = f"{part.capitalize()}_{part.capitalize()}.png"
-            image_path = base_path + image_ending
-            if pathlib.Path(image_path).is_file():
-                current_image = Image.open(image_path)
-                image_frame = (0, 0, 40, 56)
-                current_image = current_image.crop(image_frame)
-                final_image.paste(current_image, (0, 0), current_image.convert("RGBA"))
-                final_image.save(os.path.join("wiki", "images", set_name + ".png"))
-                current_image.close()
-            else:
-                print(f"set part file not found at: {image_path}")
-        final_image.close()
+        pass
+    #     final_image = Image.new("RGBA", (40, 56), (0, 0, 0, 0))
+    #     parts = ["head", "body", "legs", "hands", "hair", "altHair"]
+    #     for part in parts:
+    #         if self.has_texture(set_name, part):
+    #             temp = Image.open(os.path.join(self.package_name, "player", part.capitalize() + ".png"))
+    #             final_image.paste(temp, (0, 0), temp.convert('RGBA'))
+    #
+    #     wiki_dir = os.path.join("wiki", "images")
+    #     pathlib.Path(wiki_dir).mkdir(parents=True, exist_ok=True)
+    #     base_path = self.get_set_item_base_path_from_name(set_name)
+    #     parts = ["legs", "body", "head"]
+    #     for part in parts:
+    #         image_ending = f"{part.capitalize()}_{part.capitalize()}.png"
+    #         image_path = base_path + image_ending
+    #         if pathlib.Path(image_path).is_file():
+    #             current_image = Image.open(image_path)
+    #             image_frame = (0, 0, 40, 56)
+    #             current_image = current_image.crop(image_frame)
+    #             final_image.paste(current_image, (0, 0), current_image.convert("RGBA"))
+    #             final_image.save(os.path.join("wiki", "images", set_name + ".png"))
+    #             current_image.close()
+    #         else:
+    #             print(f"set part file not found at: {image_path}")
+    #     final_image.close()
 
     def build_item_image_link_from_set_name_and_part(self, set_name: str, part: str):
         part_name = set_name + part.capitalize()
