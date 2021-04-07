@@ -8,28 +8,10 @@ from typing import List
 from bs4 import BeautifulSoup
 
 
-
-class Repo:
-    def __init__(self, source_dir):
-        self.source_dir: str = source_dir
-        self.vanity_source_dir: str = os.path.join(source_dir, "Items", "Vanity", "")
-
-    # def analyze_repo(self):
-    #     for root, directories, files in os.walk(self.source_dir):
-    #         for file in files:
-    #             pass
-
-    # def get_vanity_sets(self):
-    #     for directories in os.walk(self.source_dir):
-    #         for file in directories:
-    #             pass
-
-
 class Wiki:
     def __init__(self, source_dir):
         self.source_dir: str = source_dir
-        self.vanity_source_dir: str = os.path.join(source_dir, "Items", "Vanity")
-        self.repo: Repo = None
+        self.vanity_source_dir: str = os.path.join(source_dir, "Items", "Vanity", "")
         self.package_name = "generate_terraria_mod_wiki"
         self.wiki_url_base: str = "/Qubus0/JourneyTrend/wiki/"
         self.repo_url_base: str = "/Qubus0/JourneyTrend/tree/master/"
@@ -75,7 +57,7 @@ class Wiki:
         with open(file) as open_file:
             file_content = open_file.read()
             item_name = ""
-            item_name_in_code = re.findall('(?sm)^\s*DisplayName\.SetDefault\(\s*\"[^"]*\"\);', file_content)
+            item_name_in_code = re.findall(r'(?sm)^\s*DisplayName\.SetDefault\(\s*\"[^"]*\"\);', file_content)
             if item_name_in_code:
                 item_name = re.findall('(?sm)\"[^"]*\"*', item_name_in_code[0])[0].replace('"', '')
         return item_name
@@ -85,7 +67,7 @@ class Wiki:
         with open(file) as open_file:
             file_content = open_file.read()
             tooltip = ""
-            tooltip_in_code = re.findall('(?sm)^\s*Tooltip\.SetDefault\(\s*\"[^"]*\"\);', file_content)
+            tooltip_in_code = re.findall(r'(?sm)^\s*Tooltip\.SetDefault\(\s*\"[^"]*\"\);', file_content)
             if tooltip_in_code:
                 tooltip = re.findall('(?sm)\"[^"]*\"*', tooltip_in_code[0])[0].replace('"', '')
         return tooltip
@@ -113,12 +95,12 @@ class Wiki:
             groups = []
             cStation = []
             liq = []
-            recipe_in_code = re.search('(?sm)ModRecipe\((.*?)recipe\.AddRecipe\(\);', file_content)
+            recipe_in_code = re.search(r'(?sm)ModRecipe\((.*?)recipe\.AddRecipe\(\);', file_content)
             if recipe_in_code:
-                ingr += re.findall('AddIngredient\(ItemID\.(.*?)\);', recipe_in_code[0])
-                groups += re.findall('AddRecipeGroup\((.*?)\);', recipe_in_code[0].replace('"', ''))
-                cStation += re.findall('(?sm)recipe\.AddTile\(TileID\.(.*?)\);', recipe_in_code[0])
-                liq += re.findall('need(.*?)\s=\strue;', recipe_in_code[0])
+                ingr += re.findall(r'AddIngredient\(ItemID\.(.*?)\);', recipe_in_code[0])
+                groups += re.findall(r'AddRecipeGroup\((.*?)\);', recipe_in_code[0].replace('"', ''))
+                cStation += re.findall(r'(?sm)recipe\.AddTile\(TileID\.(.*?)\);', recipe_in_code[0])
+                liq += re.findall(r'need(.*?)\s=\strue;', recipe_in_code[0])
         if ingr:
             for ingredient in ingr:
                 item, *amount = ingredient.split(", ")
@@ -160,7 +142,7 @@ class Wiki:
         file = base_path + part.capitalize() + ".cs"
         with open(file) as open_file:
             file_content = open_file.read()
-            recipe = re.search('(?sm)ModRecipe\((.*?)recipe\.AddRecipe\(\);', file_content)
+            recipe = re.search(r'(?sm)ModRecipe\((.*?)recipe\.AddRecipe\(\);', file_content)
         if recipe:
             return True
         else:
@@ -268,7 +250,7 @@ class Wiki:
     #     return self._build_link(text, self.wiki_url_base + page_name)
 
     def get_set_directory_path_from_name(self, set_name):
-        return self.repo.vanity_source_dir + set_name
+        return self.vanity_source_dir + set_name
 
     def get_set_item_base_path_from_name(self, set_name):
         return os.path.join(self.get_set_directory_path_from_name(set_name), set_name)
@@ -291,7 +273,7 @@ class Wiki:
                         return True
                     if part == "altHair" and file_content.__contains__("drawAltHair = true;"):
                         return True
-                    if part == "head" and not re.findall('(?sm)DrawHead\(\).*?\{.*?(return\sfalse;).*?\}',
+                    if part == "head" and not re.findall(r'(?sm)DrawHead\(\).*?{.*?(return\sfalse;).*?}',
                                                          file_content) == ['return false;']:
                         return True
         elif part == "body" or part == "hands":
@@ -301,7 +283,7 @@ class Wiki:
                     file_content = open_file.read()
                     if part == "hands" and file_content.__contains__("drawHands = true;"):
                         return True
-                    if part == "body" and not re.findall('(?sm)DrawBody\(\).*?\{.*?(return\sfalse;).*?\}',
+                    if part == "body" and not re.findall(r'(?sm)DrawBody\(\).*?{.*?(return\sfalse;).*?}',
                                                          file_content) == ['return false;']:
                         return True
         elif part == "legs":
@@ -309,8 +291,8 @@ class Wiki:
             if pathlib.Path(file).exists():
                 with open(file) as open_file:
                     file_content = open_file.read()
-                    if not re.findall('(?sm)DrawLegs\(\).*?\{.*?(return\sfalse;).*?\}', file_content) == [
-                        'return false;']:
+                    if not re.findall(r'(?sm)DrawLegs\(\).*?{.*?(return\sfalse;).*?}',
+                                      file_content) == ['return false;']:
                         return True
         else:
             return False
@@ -347,7 +329,6 @@ class Wiki:
         return self.build_repo_image_link(part_name, os.path.join("Items", "Vanity", set_name, part_name + ".png"))
 
     def build_wiki(self):
-        self.repo = Repo(self.source_dir)
         self.build_set_catalog()
         self.build_set_pages()
         self.output_pages()
@@ -418,7 +399,7 @@ class Wiki:
             page.output_page()
 
     def get_sorted_sets(self):
-        unsorted_sets = os.listdir(self.repo.vanity_source_dir)
+        unsorted_sets = os.listdir(self.vanity_source_dir)
         return sorted(unsorted_sets, key=lambda s: s.casefold())
 
     def build_set_catalog(self):
