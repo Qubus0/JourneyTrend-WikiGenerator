@@ -47,7 +47,8 @@ jobs:
         run: |
           cd ..
           git clone https://${{ secrets.JT_REPO }}:x-oauth-basic@github.com/Qubus0/JourneyTrend.wiki.git
-          mv -v -f JourneyTrend-WikiGenerator/wiki/* JourneyTrend.wiki/
+          rm -v JourneyTrend.wiki/images
+          mv -v JourneyTrend-WikiGenerator/wiki/* JourneyTrend.wiki/
           cd JourneyTrend.wiki
           git add .
           git status
