@@ -441,6 +441,7 @@ class Wiki:
             page = self.build_vanity_set_page(vanity_set)
             # buttons for prev/next set
             page.add_section_break()
+            page.add_row("---")
             previous_index = index - 1
             next_index = (index + 1) % len(alphabetical_list)
             previous_vanity_set = alphabetical_list[previous_index].capitalize()
@@ -450,6 +451,9 @@ class Wiki:
             previous_link = self.build_wiki_link(previous_text, previous_vanity_set)
             next_link = self.build_wiki_link(next_text, next_vanity_set)
             page.add_table_header(previous_link, next_link)
+            page.add_section_break()
+            catalog_link = self.build_wiki_link("< Back to Vanity set Catalog", "Vanity-Set-Catalog")
+            page.add_table_header(catalog_link)
             self.pages.append(page)
             # break  # a break here generates a single set page for testing
 
